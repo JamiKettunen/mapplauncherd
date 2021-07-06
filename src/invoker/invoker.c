@@ -49,7 +49,10 @@
 #include "protocol.h"
 #include "invokelib.h"
 #include "search.h"
+
+#ifdef USE_SAILJAIL
 #include "sailjail.h"
+#endif
 
 #define BOOSTER_SESSION "silica-session"
 #define BOOSTER_GENERIC "generic"
@@ -672,6 +675,7 @@ static void notify_app_launch(const char *desktop_file)
     }
 }
 
+#ifdef USE_SAILJAIL
 static bool ask_for_sandboxing(const char *app)
 {
     char *path = strdup(app);
@@ -679,6 +683,7 @@ static bool ask_for_sandboxing(const char *app)
     free(path);
     return ret_val;
 }
+#endif
 
 static int wait_for_launched_process_to_exit(int socket_fd)
 {
@@ -1127,6 +1132,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+#ifdef USE_SAILJAIL
     // If sailjail is already used or app specific booster is used, skip checking for sandboxing
     if (!strcmp(args.prog_name, SAILJAIL_PATH) || strcmp(args.app_name, UNDEFINED_APPLICATION)) {
         args.sandboxing_id = NULL;
@@ -1161,6 +1167,9 @@ int main(int argc, char *argv[])
         free(args.prog_name);
         args.prog_name = strdup(SAILJAIL_PATH);
     }
+#else
+    args.sandboxing_id = NULL;
+#endif
 
     // Send commands to the launcher daemon
     info("Invoking execution: '%s'\n", args.prog_name);
