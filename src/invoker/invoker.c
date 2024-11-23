@@ -43,6 +43,7 @@
 #include <time.h>
 #include <poll.h>
 #include <dbus/dbus.h>
+#include <libgen.h>
 
 #include "report.h"
 #include "protocol.h"
