@@ -21,9 +21,9 @@
 #define SINGLEINSTANCE_H
 
 #include "launcherlib.h"
-#include <tr1/memory>
+#include <memory>
 
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 // Function pointer type for lock()
 typedef bool (*lock_func_t)(const char *);

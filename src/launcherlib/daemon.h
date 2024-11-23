@@ -29,9 +29,9 @@
 using std::string;
 
 #include <sys/types.h>
-#include <tr1/memory>
+#include <memory>
 
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 #include <vector>
 
